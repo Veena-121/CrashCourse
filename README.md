@@ -5,6 +5,17 @@ Turn chaotic YouTube playlists into structured learning paths with progress trac
 Built because my “Watch Later” playlist was becoming a graveyard of unfinished tutorials 💀
 
 ---
+## Screenshots
+<img width="1918" height="950" alt="Screenshot 2026-05-24 221759" src="https://github.com/user-attachments/assets/b4d3c38f-a0b4-4501-9cf9-be244ebb058c" />
+
+
+<img width="1914" height="951" alt="Screenshot 2026-05-24 221842" src="https://github.com/user-attachments/assets/6e4fc9e9-201c-4d79-9e5b-3e2bdb90b9a3" />
+
+
+<img width="1919" height="937" alt="Screenshot 2026-05-24 221835" src="https://github.com/user-attachments/assets/dc4b6bff-637b-49b5-846d-2b2d03387051" />
+
+
+
 
 ## Features
 
