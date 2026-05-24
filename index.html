@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CourseForge — Turn Playlists into Courses</title>
+  <title>CrashCourse</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="app-shell">
 
-  <!-- ── Sidebar ───────────────────────────────────────── -->
+  
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-text">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polygon points="5 3 19 12 5 21 5 3"/>
         </svg>
-        Course<span>Forge</span>
+        Crash<span>Course⚡</span>
       </div>
     </div>
 
@@ -49,7 +49,7 @@
     </div>
   </aside>
 
-  <!-- ── Main ──────────────────────────────────────────── -->
+  
   <main class="main">
 
     <!-- Topbar -->
@@ -65,7 +65,7 @@
 
     <div class="content-area">
 
-      <!-- ── Page: Home ───────────────────────────────── -->
+      
       <div class="page" id="page-home">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
           <h2 style="font-size:22px;font-weight:800">My Courses</h2>
@@ -74,7 +74,7 @@
         <div id="course-list"></div>
       </div>
 
-      <!-- ── Page: New course ─────────────────────────── -->
+      
       <div class="page" id="page-new">
         <div class="setup-hero" style="margin:0 auto">
           <h1 style="font-size:2rem;margin-bottom:8px">Build a Course</h1>
@@ -86,7 +86,7 @@
               <button class="setup-tab" data-tab="manual">✏️ Manual Entry</button>
             </div>
 
-            <!-- Tab: URL -->
+            
             <div class="tab-content active" id="tab-url">
               <div class="form-group">
                 <label>YouTube Playlist URL</label>
@@ -101,35 +101,65 @@
                   <label>Course Title</label>
                   <input type="text" id="url-course-title" placeholder="e.g. Python Fundamentals">
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                  <div class="form-group">
-                    <label>Start Date</label>
-                    <input type="date" id="url-start-date">
+                <div class="form-group">
+                  <label>Start Date</label>
+                  <input type="date" id="url-start-date">
+                </div>
+                <div class="form-group">
+                  <label>Learning Pace</label>
+                  <div class="pace-picker" id="url-pace-picker">
+                    <button type="button" class="pace-option" data-days="4" data-pace="casual">
+                      <span class="pace-icon">🛋️</span>
+                      <span class="pace-name">Casual</span>
+                      <span class="pace-detail">1 lesson every 4 days</span>
+                    </button>
+                    <button type="button" class="pace-option active" data-days="2" data-pace="intermediate">
+                      <span class="pace-icon">📚</span>
+                      <span class="pace-name">Intermediate</span>
+                      <span class="pace-detail">1 lesson every 2 days</span>
+                    </button>
+                    <button type="button" class="pace-option" data-days="1" data-pace="hardcore">
+                      <span class="pace-icon">⚡</span>
+                      <span class="pace-name">Hardcore</span>
+                      <span class="pace-detail">1 lesson per day</span>
+                    </button>
                   </div>
-                  <div class="form-group">
-                    <label>Days per Lesson</label>
-                    <input type="number" id="url-days-per-lesson" value="2" min="1" max="14">
-                  </div>
+                  <input type="hidden" id="url-days-per-lesson" value="2">
                 </div>
                 <button class="btn btn-primary btn-full" id="btn-build-url">Create Course →</button>
               </div>
             </div>
 
-            <!-- Tab: Manual -->
+            
             <div class="tab-content" id="tab-manual">
               <div class="form-group">
                 <label>Course Title</label>
                 <input type="text" id="manual-course-title" placeholder="e.g. Design Basics">
               </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                <div class="form-group">
-                  <label>Start Date</label>
-                  <input type="date" id="manual-start-date">
+              <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" id="manual-start-date">
+              </div>
+              <div class="form-group">
+                <label>Learning Pace</label>
+                <div class="pace-picker" id="manual-pace-picker">
+                  <button type="button" class="pace-option" data-days="4" data-pace="casual">
+                    <span class="pace-icon">🛋️</span>
+                    <span class="pace-name">Casual</span>
+                    <span class="pace-detail">1 lesson every 4 days</span>
+                  </button>
+                  <button type="button" class="pace-option active" data-days="2" data-pace="intermediate">
+                    <span class="pace-icon">📚</span>
+                    <span class="pace-name">Intermediate</span>
+                    <span class="pace-detail">1 lesson every 2 days</span>
+                  </button>
+                  <button type="button" class="pace-option" data-days="1" data-pace="hardcore">
+                    <span class="pace-icon">⚡</span>
+                    <span class="pace-name">Hardcore</span>
+                    <span class="pace-detail">1 lesson per day</span>
+                  </button>
                 </div>
-                <div class="form-group">
-                  <label>Days per Lesson</label>
-                  <input type="number" id="manual-days-per-lesson" value="2" min="1" max="14">
-                </div>
+                <input type="hidden" id="manual-days-per-lesson" value="2">
               </div>
               <div class="form-group">
                 <label>Videos</label>
@@ -142,7 +172,7 @@
         </div>
       </div>
 
-      <!-- ── Page: Course view ─────────────────────────── -->
+      
       <div class="page" id="page-course">
         <div class="stats-row">
           <div class="stat-card"><div class="stat-val" id="stat-lessons">0</div><div class="stat-label">Lessons done</div></div>
@@ -156,6 +186,7 @@
             <h2 id="course-view-title">Course</h2>
             <div class="sub">
               <span id="course-lesson-count">0 lessons</span>
+              <span class="deadline-tag ok" id="course-pace-badge" style="display:none"></span>
             </div>
           </div>
           <div class="progress-ring-wrap">
@@ -175,7 +206,7 @@
         <div class="lessons-grid" id="lessons-list"></div>
       </div>
 
-      <!-- ── Page: Badges ──────────────────────────────── -->
+      
       <div class="page" id="page-badges">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
           <div>
@@ -190,7 +221,7 @@
   </main>
 </div><!-- /app-shell -->
 
-<!-- ── Lesson modal ─────────────────────────────────────── -->
+
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-header">
@@ -212,7 +243,7 @@
   </div>
 </div>
 
-<!-- ── Badge earned popup ────────────────────────────────── -->
+
 <div class="badge-popup" id="badge-popup">
   <div class="badge-popup-inner">
     <span class="badge-popup-icon" id="popup-badge-icon">🏆</span>
@@ -223,10 +254,10 @@
   </div>
 </div>
 
-<!-- ── Toasts ────────────────────────────────────────────── -->
+
 <div class="toast-container" id="toast-container"></div>
 
-<!-- ── Scripts (order matters) ──────────────────────────── -->
+
 <script src="config.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/badges.js"></script>
@@ -235,7 +266,7 @@
 <script src="js/app.js"></script>
 
 <script>
-  // Set today's date as default for date inputs
+ 
   document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('url-start-date').value = today;
