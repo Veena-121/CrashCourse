@@ -36,7 +36,7 @@ Built because my “Watch Later” playlist was becoming a graveyard of unfinish
 ## 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone <repo-url>
 cd crashcourse
 ```
 
@@ -183,3 +183,6 @@ So I wanted something that makes learning feel:
 - and actually finishable
 
 CrashCourse⚡ is basically my attempt at fixing tutorial hoarding.
+
+
+-----------------------------------------------------------------currently system updates in progress------------------------------------------------------------------------
