@@ -1,7 +1,5 @@
-// ── quiz.js — AI quiz generation via Groq ────────────────────
-
 const QuizEngine = {
-  // Generate quiz questions for a lesson using Groq
+  
   async generate(lesson) {
     if (!CONFIG.GROQ_API_KEY || CONFIG.GROQ_API_KEY === 'YOUR_GROQ_API_KEY_HERE') {
       throw new Error('Groq API key not set. Please edit config.js.');
@@ -19,6 +17,7 @@ Rules:
 - Exactly one option is correct
 - Questions should test conceptual understanding, not just trivia
 - Keep questions concise and clear
+-Question should only be in English even if content is in Hindi
 
 Respond ONLY with valid JSON in this exact format, no extra text:
 {
@@ -55,7 +54,7 @@ Where "answer" is the 0-based index of the correct option.`;
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content || '';
 
-    // Parse JSON — strip any markdown fences
+    
     const clean = text.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
 
@@ -66,7 +65,7 @@ Where "answer" is the 0-based index of the correct option.`;
     return parsed.questions;
   },
 
-  // Score a set of answers
+ 
   score(questions, userAnswers) {
     let correct = 0;
     questions.forEach((q, i) => {
