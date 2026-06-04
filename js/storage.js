@@ -1,5 +1,3 @@
-// ── storage.js — all localStorage read/write ─────────────────
-
 const STORAGE_KEYS = {
   COURSES:  'ytcourse_courses',
   PROGRESS: 'ytcourse_progress',
@@ -8,7 +6,7 @@ const STORAGE_KEYS = {
 };
 
 const Storage = {
-  // ── courses ──────────────────────────────────────────────
+  
   getCourses() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.COURSES)) || []; }
     catch { return []; }
@@ -25,7 +23,7 @@ const Storage = {
   deleteCourse(id) {
     const courses = this.getCourses().filter(c => c.id !== id);
     localStorage.setItem(STORAGE_KEYS.COURSES, JSON.stringify(courses));
-    // clean up progress too
+    
     const prog = this.getProgress();
     delete prog[id];
     localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(prog));
@@ -35,7 +33,7 @@ const Storage = {
     return this.getCourses().find(c => c.id === id) || null;
   },
 
-  // ── progress ─────────────────────────────────────────────
+  
   getProgress() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS)) || {}; }
     catch { return {}; }
@@ -46,7 +44,7 @@ const Storage = {
     return all[courseId] || {};
   },
 
-  // lessonProgress: { watched, quizPassed, quizScore, completedAt }
+  
   setLessonProgress(courseId, lessonIndex, data) {
     const all = this.getProgress();
     if (!all[courseId]) all[courseId] = {};
@@ -54,7 +52,7 @@ const Storage = {
     localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(all));
   },
 
-  // ── badges ───────────────────────────────────────────────
+  
   getEarnedBadges() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.BADGES)) || []; }
     catch { return []; }
@@ -62,13 +60,13 @@ const Storage = {
 
   awardBadge(badgeId) {
     const badges = this.getEarnedBadges();
-    if (badges.includes(badgeId)) return false; // already earned
+    if (badges.includes(badgeId)) return false; 
     badges.push(badgeId);
     localStorage.setItem(STORAGE_KEYS.BADGES, JSON.stringify(badges));
-    return true; // newly awarded
+    return true; 
   },
 
-  // ── stats ─────────────────────────────────────────────────
+  
   getStats() {
     const defaults = { totalXP: 0, quizzesPassed: 0, lessonsCompleted: 0, streak: 0, lastActive: null };
     try { return { ...defaults, ...JSON.parse(localStorage.getItem(STORAGE_KEYS.STATS)) }; }
