@@ -1,7 +1,5 @@
-// ── youtube.js — playlist fetching & course builder ──────────
-
 const YouTube = {
-  // Extract playlist ID from various URL formats
+  
   extractPlaylistId(url) {
     const patterns = [
       /[?&]list=([^&#]+)/,
@@ -14,7 +12,7 @@ const YouTube = {
     return null;
   },
 
-  // Fetch all videos in a playlist (handles pagination up to 200 videos)
+  
   async fetchPlaylist(playlistId) {
     if (!CONFIG.YOUTUBE_API_KEY || CONFIG.YOUTUBE_API_KEY === 'YOUR_YOUTUBE_API_KEY_HERE') {
       throw new Error('YouTube API key not set. Please edit config.js.');
@@ -57,7 +55,7 @@ const YouTube = {
     return videos;
   },
 
-  // Fetch playlist metadata (title, channel)
+  
   async fetchPlaylistInfo(playlistId) {
     if (!CONFIG.YOUTUBE_API_KEY || CONFIG.YOUTUBE_API_KEY === 'YOUR_YOUTUBE_API_KEY_HERE') return null;
     const url = new URL('https://www.googleapis.com/youtube/v3/playlists');
@@ -72,10 +70,10 @@ const YouTube = {
   },
 };
 
-// ── Course builder ────────────────────────────────────────────
+
 
 const CourseBuilder = {
-  // Build a course object from video list
+  
   build({ title, videos, startDate, daysPerLesson }) {
     const start = new Date(startDate);
     const lessons = videos.map((v, i) => {
@@ -99,7 +97,7 @@ const CourseBuilder = {
     };
   },
 
-  // Deadline status for a lesson
+  
   deadlineStatus(lesson, isCompleted) {
     if (isCompleted) return { label: '✓ Done', cls: 'done' };
     const now = new Date();
