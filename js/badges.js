@@ -1,4 +1,4 @@
-// ── badges.js — badge definitions & award logic ──────────────
+
 
 const BADGE_DEFS = [
   {
@@ -68,7 +68,7 @@ const BadgeSystem = {
 
   getById(id) { return BADGE_DEFS.find(b => b.id === id); },
 
-  // Called after each lesson/quiz completion — returns array of newly earned badge IDs
+  
   evaluate(courseId) {
     const newBadges = [];
     const course   = Storage.getCourseById(courseId);
@@ -99,7 +99,7 @@ const BadgeSystem = {
     if (stats.streak >= 7)                             try_award('streak_7');
     if (new Date().getHours() >= 0 && new Date().getHours() < 4) try_award('night_owl');
 
-    // speed_run: completed before or on deadline
+    
     const lessonKeys = Object.keys(progress);
     const lastKey    = lessonKeys[lessonKeys.length - 1];
     if (lastKey !== undefined) {
@@ -112,7 +112,7 @@ const BadgeSystem = {
       }
     }
 
-    // perfect course: all quizzes >= 80
+   
     if (totalLessons > 0 && quizzesPassed === totalLessons) {
       const allHigh = Object.values(progress).every(p => (p.quizScore || 0) >= 80);
       if (allHigh) try_award('perfect_course');
