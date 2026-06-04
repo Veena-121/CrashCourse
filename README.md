@@ -6,7 +6,8 @@ Built because my “Watch Later” playlist was becoming a graveyard of unfinish
 
 ---
 ## Screenshots
-<img width="1918" height="950" alt="Screenshot 2026-05-24 221759" src="https://github.com/user-attachments/assets/b4d3c38f-a0b4-4501-9cf9-be244ebb058c" />
+
+<img width="1919" height="931" alt="image" src="https://github.com/user-attachments/assets/705980b0-e287-4e50-bb2c-2d5e222871f3" />
 
 
 <img width="1914" height="951" alt="Screenshot 2026-05-24 221842" src="https://github.com/user-attachments/assets/6e4fc9e9-201c-4d79-9e5b-3e2bdb90b9a3" />
