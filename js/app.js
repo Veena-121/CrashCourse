@@ -1,43 +1,38 @@
-// ── app.js — UI rendering & event handling ───────────────────
 
-// ── State ─────────────────────────────────────────────────────
 let currentCourseId = null;
 let activeLessonData = null;
 let activeQuizQuestions = [];
 let userAnswers = {};
 let quizSubmitted = false;
 
-// ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   refreshSidebarXP();
   refreshStreak();
   navigateTo('home');
 
-  // Nav clicks
+ 
   document.querySelectorAll('.nav-item').forEach(btn => {
     btn.addEventListener('click', () => navigateTo(btn.dataset.page));
   });
 
-  // Setup tabs
+  
   document.querySelectorAll('.setup-tab').forEach(t => {
     t.addEventListener('click', () => switchSetupTab(t.dataset.tab));
   });
 
-  // Fetch playlist button
+  
   document.getElementById('btn-fetch-playlist')
     .addEventListener('click', handleFetchPlaylist);
 
-  // Build course from URL
+ 
   document.getElementById('btn-build-url')
     .addEventListener('click', handleBuildFromUrl);
 
-  // Build course from manual
   document.getElementById('btn-add-video')
     .addEventListener('click', addManualVideoRow);
   document.getElementById('btn-build-manual')
     .addEventListener('click', handleBuildManual);
 
-  // Modal close
   document.getElementById('modal-overlay')
     .addEventListener('click', (e) => {
       if (e.target === e.currentTarget) closeModal();
@@ -55,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .addEventListener('click', submitQuiz);
 });
 
-// ── Navigation ────────────────────────────────────────────────
+
 function navigateTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -72,7 +67,7 @@ function navigateTo(page) {
   if (page === 'course') renderCourseView();
 }
 
-// ── Sidebar XP ────────────────────────────────────────────────
+
 function refreshSidebarXP() {
   const stats = Storage.getStats();
   const xpPerLevel = 500;
@@ -87,7 +82,7 @@ function refreshStreak() {
   document.getElementById('streak-count').textContent = `${stats.streak} day streak`;
 }
 
-// ── Home / course list ────────────────────────────────────────
+
 function renderCourseList() {
   const courses = Storage.getCourses();
   const el = document.getElementById('course-list');
@@ -138,7 +133,7 @@ function deleteCourse(id) {
   showToast('Course deleted', 'warning');
 }
 
-// ── Course view ───────────────────────────────────────────────
+
 function renderCourseView() {
   if (!currentCourseId) { navigateTo('home'); return; }
   const course = Storage.getCourseById(currentCourseId);
@@ -150,24 +145,24 @@ function renderCourseView() {
   const total     = course.lessons.length;
   const pct       = total ? Math.round((completed / total) * 100) : 0;
 
-  // Stats row
+  
   const quizzesPassed = Object.values(progress).filter(p => p.quizPassed).length;
   document.getElementById('stat-lessons').textContent  = `${completed}/${total}`;
   document.getElementById('stat-quizzes').textContent  = quizzesPassed;
   document.getElementById('stat-xp').textContent       = stats.totalXP;
   document.getElementById('stat-streak').textContent   = stats.streak;
 
-  // Header
+
   document.getElementById('course-view-title').textContent = course.title;
   document.getElementById('course-lesson-count').textContent = `${total} lessons`;
 
-  // SVG ring
+
   const r = 40, circ = 2 * Math.PI * r;
   document.getElementById('ring-circle').setAttribute('stroke-dasharray',
     `${(pct / 100) * circ} ${circ}`);
   document.getElementById('ring-pct').textContent = pct + '%';
 
-  // Lessons list
+
   const listEl = document.getElementById('lessons-list');
   listEl.innerHTML = course.lessons.map((lesson, i) => {
     const prog       = progress[i] || {};
@@ -205,7 +200,7 @@ function renderCourseView() {
   }).join('');
 }
 
-// ── Lesson modal ──────────────────────────────────────────────
+
 function openLesson(index) {
   const course = Storage.getCourseById(currentCourseId);
   if (!course) return;
@@ -223,12 +218,11 @@ function openLesson(index) {
   document.getElementById('video-frame').src =
     `https://www.youtube.com/embed/${lesson.videoId}?rel=0&modestbranding=1`;
 
-  // watched button
+  
   const watchBtn = document.getElementById('btn-mark-watched');
   watchBtn.textContent = prog.watched ? '✓ Watched' : 'Mark as Watched';
   watchBtn.disabled = !!prog.watched;
 
-  // quiz area
   const quizArea = document.getElementById('quiz-area');
   if (prog.quizPassed || (prog.watched && prog.quizScore !== undefined)) {
     quizArea.innerHTML = renderQuizResult(prog.quizScore, true);
@@ -270,11 +264,11 @@ function markWatched() {
   renderCourseView();
   refreshSidebarXP();
 
-  // update button
+  
   document.getElementById('btn-mark-watched').textContent = '✓ Watched';
   document.getElementById('btn-mark-watched').disabled = true;
 
-  // show quiz
+  
   document.getElementById('quiz-area').innerHTML = `
     <div class="quiz-section">
       <h4>AI Quiz</h4>
@@ -282,13 +276,13 @@ function markWatched() {
       <button class="btn btn-primary" id="btn-start-quiz" onclick="startQuiz()">Start Quiz →</button>
     </div>`;
 
-  // check badges
+  
   const newBadges = BadgeSystem.evaluate(currentCourseId);
   newBadges.forEach(id => showBadgePopup(id));
   showToast('Lesson marked as watched! +20 XP', 'success');
 }
 
-// ── Quiz flow ─────────────────────────────────────────────────
+
 async function startQuiz() {
   if (!activeLessonData) return;
   const { lesson } = activeLessonData;
@@ -338,10 +332,10 @@ function renderQuizQuestions() {
 function selectAnswer(qi, oi) {
   if (quizSubmitted) return;
   userAnswers[qi] = oi;
-  // highlight selected
+
   document.querySelectorAll(`[data-qi="${qi}"]`).forEach(btn => btn.classList.remove('selected'));
   document.querySelector(`[data-qi="${qi}"][data-oi="${oi}"]`).classList.add('selected');
-  // enable submit if all answered
+  
   if (Object.keys(userAnswers).length === activeQuizQuestions.length) {
     document.getElementById('btn-submit-quiz').disabled = false;
   }
@@ -354,7 +348,7 @@ function submitQuiz() {
   const passed = score >= 60;
   const { index } = activeLessonData;
 
-  // Reveal correct/wrong
+
   activeQuizQuestions.forEach((q, qi) => {
     const chosen  = userAnswers[qi];
     const correct = q.answer;
@@ -405,7 +399,7 @@ function renderQuizResult(score, compact) {
   </div>`;
 }
 
-// ── Setup: URL tab ────────────────────────────────────────────
+
 async function handleFetchPlaylist() {
   const url  = document.getElementById('playlist-url').value.trim();
   const btn  = document.getElementById('btn-fetch-playlist');
@@ -432,7 +426,7 @@ async function handleFetchPlaylist() {
     document.getElementById('url-playlist-title').textContent = meta?.title || id;
     document.getElementById('playlist-info').style.display = 'block';
 
-    // store fetched videos in a temp variable on window
+    
     window._fetchedVideos = videos;
     window._fetchedMeta = meta;
 
@@ -466,7 +460,7 @@ function handleBuildFromUrl() {
   navigateTo('course');
 }
 
-// ── Setup: Manual tab ─────────────────────────────────────────
+
 function switchSetupTab(tab) {
   document.querySelectorAll('.setup-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -513,7 +507,7 @@ function handleBuildManual() {
   navigateTo('course');
 }
 
-// ── Badges page ───────────────────────────────────────────────
+
 function renderBadgesPage() {
   const earned = Storage.getEarnedBadges();
   const all    = BadgeSystem.getAll();
@@ -532,7 +526,6 @@ function renderBadgesPage() {
   }).join('');
 }
 
-// ── Badge popup ───────────────────────────────────────────────
 function showBadgePopup(badgeId) {
   const badge = BadgeSystem.getById(badgeId);
   if (!badge) return;
@@ -550,7 +543,7 @@ document.getElementById && document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── Toast ─────────────────────────────────────────────────────
+
 function showToast(msg, type = 'success') {
   const icons = { success: '✓', warning: '⚡', error: '✕' };
   const container = document.getElementById('toast-container');
@@ -565,7 +558,7 @@ function showToast(msg, type = 'success') {
   }, 3000);
 }
 
-// ── Utils ─────────────────────────────────────────────────────
+
 function escHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
